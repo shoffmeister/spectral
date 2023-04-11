@@ -12,30 +12,34 @@ Overrides can be used to apply rulesets on:
 **Example**
 
 ```yaml
+extends: spectral:oas
+
 overrides:
-  formats:
+  - formats:
     - json-schema-draft7
-  files:
+  - files:
     - schemas/**/*.draft7.json
-  rules:
-    valid-number-validation:
-      given:
-        - $..exclusiveMinimum
-        - $..exclusiveMaximum
-      then:
-        function: schema
-        functionOptions:
-          type: number
+    rules:
+      valid-number-validation:
+        given:
+          - $..exclusiveMinimum
+          - $..exclusiveMaximum
+        then:
+          function: schema
+          functionOptions:
+            type: number
 ```
 
 To apply an override to particular elements of files, combine a glob for a filepath with a [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) after the anchor, i.e.:
 
 ```yaml
+extends: spectral:oas
+
 overrides:
   - files:
       - "legacy/**/*.oas.json#/paths"
     rules:
-      some-inherited-rule: "off"
+      operation-description: "off"
 ```
 
 JSON Pointers have a different syntax than JSON Paths used in the `given` component of a rule.
@@ -47,11 +51,13 @@ Since `/` has a special meaning in JSON pointer, it must be encoded as `~1` when
 You can test JSON Pointer expressions in the [JSON Query online evaluator](https://www.jsonquerytool.com/) by choosing "JSONPointer" as the Transform.
 
 ```yaml
+extends: spectral:oas
+
 overrides:
   - files:
       - "legacy/**/*.oas.json#/paths/~1Pets~1{petId}/get/parameters/0"
     rules:
-      some-inherited-rule: "off"
+      operation-description: "off"
 ```
 
 In the event of multiple matches, the order of definition takes place, with the last one having the higher priority.
