@@ -6,7 +6,7 @@ function assertRulesetFunction(
   maybeRulesetFunction: unknown,
 ): asserts maybeRulesetFunction is RulesetFunction | RulesetFunctionWithValidator {
   if (typeof maybeRulesetFunction !== 'function') {
-    throw ReferenceError('Function is not defined');
+    throw ReferenceError('A function must be specified');
   }
 }
 
